@@ -6,8 +6,9 @@
         {
             int result = 0;
             if (numbers.Length == 0) { return 0; }
+            char[] delimitedChars = { ',' , '\n'};
 
-            String[] numbersArray = numbers.Split(',');
+            String[] numbersArray = numbers.Split(delimitedChars);
 
             
             foreach (String number in numbersArray)
