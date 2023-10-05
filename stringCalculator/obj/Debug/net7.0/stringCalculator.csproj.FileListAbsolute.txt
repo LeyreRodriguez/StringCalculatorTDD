@@ -1,0 +1,11 @@
+C:\Users\lerodriguez\source\repos\stringCalculator\stringCalculator\bin\Debug\net7.0\stringCalculator.deps.json
+C:\Users\lerodriguez\source\repos\stringCalculator\stringCalculator\bin\Debug\net7.0\stringCalculator.dll
+C:\Users\lerodriguez\source\repos\stringCalculator\stringCalculator\bin\Debug\net7.0\stringCalculator.pdb
+C:\Users\lerodriguez\source\repos\stringCalculator\stringCalculator\obj\Debug\net7.0\stringCalculator.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lerodriguez\source\repos\stringCalculator\stringCalculator\obj\Debug\net7.0\stringCalculator.AssemblyInfoInputs.cache
+C:\Users\lerodriguez\source\repos\stringCalculator\stringCalculator\obj\Debug\net7.0\stringCalculator.AssemblyInfo.cs
+C:\Users\lerodriguez\source\repos\stringCalculator\stringCalculator\obj\Debug\net7.0\stringCalculator.csproj.CoreCompileInputs.cache
+C:\Users\lerodriguez\source\repos\stringCalculator\stringCalculator\obj\Debug\net7.0\stringCalculator.dll
+C:\Users\lerodriguez\source\repos\stringCalculator\stringCalculator\obj\Debug\net7.0\refint\stringCalculator.dll
+C:\Users\lerodriguez\source\repos\stringCalculator\stringCalculator\obj\Debug\net7.0\stringCalculator.pdb
+C:\Users\lerodriguez\source\repos\stringCalculator\stringCalculator\obj\Debug\net7.0\ref\stringCalculator.dll
