@@ -9,6 +9,7 @@ namespace stringCalculator
         public int add(String numbers)
         {
             int result = 0;
+            String cadena = "";
             if (numbers.Length == 0) { return 0; }
            
             char delimiter=' ';
@@ -23,6 +24,8 @@ namespace stringCalculator
             }
 
             String[] numbersArray = numbers.Split(',','\n', delimiter);
+
+            
            
 
             if (chars[0].Equals('/') && chars[1].Equals('/'))
@@ -30,6 +33,11 @@ namespace stringCalculator
                 for (int i = 2; i < numbersArray.Length; i++)
                 {
                     result += Int32.Parse(numbersArray[i]);
+
+                    if (Int32.Parse(numbersArray[i]) < 0)
+                    {
+                        cadena += numbersArray[i] + " ";
+                    }
                 }
                 
             } else
@@ -38,8 +46,17 @@ namespace stringCalculator
                 {
                
                     result += Int32.Parse(number);
-                    
+                    if (Int32.Parse(number) < 0)
+                    {
+                        cadena += number + " ";
+                    }
+
                 }
+            }
+
+            if (cadena.Length > 0)
+            {
+                throw new Exception($"Negatives not allowed: {cadena}");
             }
 
             

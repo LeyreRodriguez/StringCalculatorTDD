@@ -64,6 +64,18 @@ namespace stringCalculator
             Assert.That(new stringCalculator().add("//-\n1\n2-3-4-5"), Is.EqualTo(15));
         }
 
+        [Test]
+        public void negativeNumbers1()
+        {
+            Assert.That(new stringCalculator().add("1\n2,3,4,5"), Is.EqualTo(15));
+        }
+        [Test]
+        public void negativeNumbers2()
+        {
+            Assert.That(new stringCalculator().add("1\n2,-3,4,-5"), Is.EqualTo(7));
+        }
+
+
 
 
     }
