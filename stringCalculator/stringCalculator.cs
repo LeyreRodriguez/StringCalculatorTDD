@@ -9,14 +9,13 @@
 
             String[] numbersArray = numbers.Split(',');
 
-            if (numbersArray.Length <= 2)
+            
+            foreach (String number in numbersArray)
             {
-                foreach (String number in numbersArray)
-                {
-                    result += Int32.Parse(number);
-                }
-
+                result += Int32.Parse(number);
             }
+
+            
             
             return result;
         }
