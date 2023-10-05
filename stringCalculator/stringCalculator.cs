@@ -1,4 +1,8 @@
-﻿namespace stringCalculator
+﻿using System;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using String = System.String;
+
+namespace stringCalculator
 {
     public class stringCalculator
     {
@@ -6,17 +10,38 @@
         {
             int result = 0;
             if (numbers.Length == 0) { return 0; }
-            char[] delimitedChars = { ',' , '\n'};
-
-            String[] numbersArray = numbers.Split(delimitedChars);
-
+           
+            char delimiter=' ';
+            char[] chars = numbers.ToCharArray();
+           
             
-            foreach (String number in numbersArray)
+            if (chars[0].Equals('/') && chars[1].Equals('/'))
             {
-                result += Int32.Parse(number);
+                delimiter = chars[2];
+              
+                
             }
 
-            
+            String[] numbersArray = numbers.Split(',','\n', delimiter);
+           
+
+            if (chars[0].Equals('/') && chars[1].Equals('/'))
+            {
+                for (int i = 2; i < numbersArray.Length; i++)
+                {
+                    result += Int32.Parse(numbersArray[i]);
+                }
+                
+            } else
+            {
+                foreach (String number in numbersArray)
+                {
+               
+                    result += Int32.Parse(number);
+                    
+                }
+            }
+
             
             return result;
         }

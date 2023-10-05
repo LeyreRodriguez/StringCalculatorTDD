@@ -50,5 +50,21 @@ namespace stringCalculator
             Assert.That(new stringCalculator().add("1,2\n3\n4,5"), Is.EqualTo(15));
         }
 
+        [Test]
+        public void differentDelimeter()
+        {
+            
+            Assert.That(new stringCalculator().add("//;\n1\n2;3;4;5"), Is.EqualTo(15));
+        }
+
+        [Test]
+        public void differentDelimeter2()
+        {
+            
+            Assert.That(new stringCalculator().add("//-\n1\n2-3-4-5"), Is.EqualTo(15));
+        }
+
+
+
     }
 }
