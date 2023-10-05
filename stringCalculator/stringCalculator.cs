@@ -32,11 +32,15 @@ namespace stringCalculator
             {
                 for (int i = 2; i < numbersArray.Length; i++)
                 {
-                    result += Int32.Parse(numbersArray[i]);
+                    
 
                     if (Int32.Parse(numbersArray[i]) < 0)
                     {
                         cadena += numbersArray[i] + " ";
+                    }
+                    if (Int32.Parse(numbersArray[i]) <= 1000)
+                    {
+                        result += Int32.Parse(numbersArray[i]);
                     }
                 }
                 
@@ -45,10 +49,14 @@ namespace stringCalculator
                 foreach (String number in numbersArray)
                 {
                
-                    result += Int32.Parse(number);
+                  
                     if (Int32.Parse(number) < 0)
                     {
                         cadena += number + " ";
+                    }
+                    if (Int32.Parse(number) <= 1000)
+                    {
+                        result += Int32.Parse(number);
                     }
 
                 }

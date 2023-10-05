@@ -75,6 +75,16 @@ namespace stringCalculator
             Assert.That(new stringCalculator().add("1\n2,-3,4,-5"), Is.EqualTo(7));
         }
 
+        [Test]
+        public void bigNumbers1()
+        {
+            Assert.That(new stringCalculator().add("1\n2,1003,4,1000"), Is.EqualTo(1007));
+        }
+        [Test]
+        public void bigNumbers2()
+        {
+            Assert.That(new stringCalculator().add("1\n2,1003,4,999"), Is.EqualTo(1006));
+        }
 
 
 
