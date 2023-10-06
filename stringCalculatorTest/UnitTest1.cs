@@ -1,3 +1,5 @@
+using FluentAssertions;
+
 namespace stringCalculator
 {
     public class Tests
@@ -9,81 +11,112 @@ namespace stringCalculator
         }
 
         [Test]
-        public void isEmpty()
+        public void should_return_0_if_values_are_an_empty_string()
         {
-            Assert.That(new stringCalculator().add(""), Is.EqualTo(0));
+            String values = "";
+            stringCalculator cadena = new stringCalculator();
+            int result = cadena.add(values);
+            result.Should().Be(0);
         }
 
         [Test]
-        public void simpleTest1()
+        public void should_return_1_if_values_are_1()
         {
-            Assert.That(new stringCalculator().add("1"), Is.EqualTo(1));
+            String values = "1";
+            stringCalculator cadena = new stringCalculator();
+            int result = cadena.add(values);
+            result.Should().Be(1);
         }
         [Test]
-        public void simpleTest2()
+        public void should_return_3()
         {
-            Assert.That(new stringCalculator().add("1,2"), Is.EqualTo(3));
+            String values = "1,2";
+            stringCalculator cadena = new stringCalculator();
+            int result = cadena.add(values);
+            result.Should().Be(3);
         }
 
         [Test]
-        public void unknownAmount()
+        public void should_return_45()
         {
-            Assert.That(new stringCalculator().add("1,2,3,4,5,6,7,8,9"), Is.EqualTo(45));
+            String values = "1,2,3,4,5,6,7,8,9";
+            stringCalculator cadena = new stringCalculator();
+            int result = cadena.add(values);
+            result.Should().Be(45);
         }
         
 
         [Test]
-        public void unknownAmount2()
+        public void should_return_15()
         {
-            Assert.That(new stringCalculator().add("1,2,3,4,5"), Is.EqualTo(15));
+            String values = "1,2,3,4,5";
+            stringCalculator cadena = new stringCalculator();
+            int result = cadena.add(values);
+            result.Should().Be(15);
         }
 
         [Test]
-        public void newLines()
+        public void should_return_15_with_line_break_delimiter()
         {
-            Assert.That(new stringCalculator().add("1\n2,3,4,5"), Is.EqualTo(15));
+            String values = "1\n2,3,4,5";
+            stringCalculator cadena = new stringCalculator();
+            int result = cadena.add(values);
+            result.Should().Be(15);
         }
 
         [Test]
-        public void newLines2()
+        public void should_return_15_with_line_break_delimiter_2()
         {
-            Assert.That(new stringCalculator().add("1,2\n3\n4,5"), Is.EqualTo(15));
+            String values = "1,2\n3\n4,5";
+            stringCalculator cadena = new stringCalculator();
+            int result = cadena.add(values);
+            result.Should().Be(15);
         }
 
         [Test]
-        public void differentDelimeter()
+        public void should_return_15_with_random_delimiter()
         {
-            
-            Assert.That(new stringCalculator().add("//;\n1\n2;3;4;5"), Is.EqualTo(15));
+            String values = "//;\n1\n2;3;4;5";
+            stringCalculator cadena = new stringCalculator();
+            int result = cadena.add(values);
+            result.Should().Be(15);
         }
 
         [Test]
-        public void differentDelimeter2()
+        public void should_return_15_with_random_delimiter_2()
         {
-            
-            Assert.That(new stringCalculator().add("//-\n1\n2-3-4-5"), Is.EqualTo(15));
+
+            String values = "//-\n1\n2-3-4-5";
+            stringCalculator cadena = new stringCalculator();
+            int result = cadena.add(values);
+            result.Should().Be(15);
+        }
+
+    
+        [Test]
+        public void should_fail_and_throw_an_exception()
+        {
+            String values = "1\n2,-3,4,-5";
+            stringCalculator cadena = new stringCalculator();
+            int result = cadena.add(values);
+            result.Should().Be(-2);
         }
 
         [Test]
-        public void negativeNumbers1()
+        public void should_be_1007_but_big_numbers_must_be_ignored()
         {
-            Assert.That(new stringCalculator().add("1\n2,3,4,5"), Is.EqualTo(15));
+            String values = "1\n2,1003,4,1000";
+            stringCalculator cadena = new stringCalculator();
+            int result = cadena.add(values);
+            result.Should().Be(1007);
         }
         [Test]
-        public void negativeNumbers2()
+        public void should_be_1006_but_big_numbers_must_be_ignored()
         {
-            Assert.That(new stringCalculator().add("1\n2,-3,4,-5"), Is.EqualTo(7));
-        }
-
-        [Test]
-        public void bigNumbers1()
-        {
-            Assert.That(new stringCalculator().add("1\n2,1003,4,1000"), Is.EqualTo(1007));
-        }
-        [Test]
-        public void bigNumbers2()
-        {
-            Assert.That(new stringCalculator().add("1\n2,1003,4,999"), Is.EqualTo(1006));
+            String values = "1\n2,1003,4,999";
+            stringCalculator cadena = new stringCalculator();
+            int result = cadena.add(values);
+            result.Should().Be(1006);
         }
 
 
