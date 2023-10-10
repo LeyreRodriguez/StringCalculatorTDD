@@ -7,71 +7,60 @@ namespace stringCalculator
     public class stringCalculator
     {
         bool ownDelimiter;
-        public bool greaterThanOneThousand(int number)
+        private bool greaterThanOneThousand(int number)
         {
-            if (number <= 1000) { return true; } else { return false; }
-        }
 
-        public void throwException(String cadena)
+            return number <= 1000;
+        }
+            
+
+        private void ThrowExceptionForNegativesNumbers(String[] numbersArray)
         {
-            if (cadena.Length > 0)
+            var negativeNumbers = numbersArray.Select(n => Int32.Parse(n)).Where( n => n < 0).ToArray();
+            if (negativeNumbers.Any())
             {
-                throw new Exception($"Negatives not allowed: {cadena}");
+                throw new Exception($"Negatives not allowed: {string.Join(" ", negativeNumbers)}");
             }
-
         }
 
-        public (char[],bool) selectDelimiter(String numbers, bool ownDelimiter)
+        private (char[], bool,String) selectDelimiter(String numbers)
         {
-            char[] chars = numbers.ToCharArray();
-            char delimiter = ' ';
-            if (chars[0].Equals('/') && chars[1].Equals('/'))
+            char[] delimiters = { ',', '\n' };
+            bool ownDelimiter = false;
+
+            if(numbers.StartsWith("//")) 
             {
-                delimiter = chars[2];
+               
                 ownDelimiter = true;
+                
+                delimiters = new[] { numbers[2] , ',' , '\n' };
+                numbers = numbers.Substring(4);
+               
             }
-            char[] delimeters = {',','\n',delimiter};
-            return (delimeters, ownDelimiter);
+            
+            return (delimiters, ownDelimiter,numbers);
 
         }
+     
 
-        public bool negativesNumbers(int number)
+        private int calculateResult(bool ownDelimiter, String[] numbersArray)
         {
-            if (number < 0) { return true; } else { return false; }
+            return numbersArray.Where(n => ownDelimiter || greaterThanOneThousand(Int32.Parse(n))).Select(n => Int32.Parse(n)).Sum();
         }
 
 
         public int add(String numbers)
         {
-            int result = 0;
-            String cadena = "";
-            if (numbers.Length == 0) { return 0; }
-
-            var (delimiters, ownDelimiter) = selectDelimiter(numbers, false);
-
-            String[] numbersArray = numbers.Split(delimiters);
-
-
-            if (ownDelimiter)
+            if (string.IsNullOrEmpty(numbers))
             {
-                for (int i = 2; i < numbersArray.Length; i++)
-                {
-                    if (Int32.Parse(numbersArray[i]) < 0) { cadena += numbersArray[i] + " "; }
-                    if (greaterThanOneThousand(Int32.Parse(numbersArray[i]))) { result += Int32.Parse(numbersArray[i]); }
-                }
-            }               
-            else
-            {
-                foreach (String number in numbersArray)
-                {
-                    if (negativesNumbers(Int32.Parse(number))) { cadena += number + " "; }
-                    if (greaterThanOneThousand(Int32.Parse(number))) { result += Int32.Parse(number); }
-                }
+                return 0;
             }
 
-            throwException(cadena);
-
-            return result;
+            var (delimiters, ownDelimiter, cadenaNormalizada) = selectDelimiter(numbers);
+            string[] numbersArray = cadenaNormalizada.Split(delimiters);
+            ThrowExceptionForNegativesNumbers(numbersArray);
+            return calculateResult(ownDelimiter, numbersArray);
+            
         }
 
 
