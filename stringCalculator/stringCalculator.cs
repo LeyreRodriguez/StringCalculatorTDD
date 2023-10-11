@@ -7,6 +7,17 @@ namespace stringCalculator
     public class stringCalculator
     {
         bool ownDelimiter;
+
+        public int add(String numbers)
+        {
+
+            if (isEmpty(numbers)) return 0;
+
+            var (delimiterUsed, array) = parsearString(numbers);
+
+            return calculateResult(delimiterUsed, array).Sum();
+
+        }
         private bool lessThanOneThousand(int number)
         {
 
@@ -58,18 +69,9 @@ namespace stringCalculator
         }
 
          
-        public int add(String numbers)
-        {
-           
-           if(isEmpty(numbers)) return 0;
+        
 
-           var (delimiterUsed, array) = parsearString(numbers);
-
-            return calculateResult(delimiterUsed, array).Sum();
-
-        }
-
-        public bool isEmpty(String numbers)
+        private bool isEmpty(String numbers)
         {
             return string.IsNullOrEmpty(numbers);
         }
