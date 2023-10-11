@@ -7,7 +7,7 @@ namespace stringCalculator
     public class stringCalculator
     {
         bool ownDelimiter;
-        private bool greaterThanOneThousand(int number)
+        private bool lessThanOneThousand(int number)
         {
 
             return number <= 1000;
@@ -43,24 +43,35 @@ namespace stringCalculator
         }
      
 
-        private int calculateResult(bool ownDelimiter, String[] numbersArray)
+        private IEnumerable<int> calculateResult(bool ownDelimiter, String[] numbersArray)
         {
-            return numbersArray.Where(n => ownDelimiter || greaterThanOneThousand(Int32.Parse(n))).Select(n => Int32.Parse(n)).Sum();
+
+            return numbersArray.Where(n => ownDelimiter || lessThanOneThousand(Int32.Parse(n))).Select(n => Int32.Parse(n));
         }
 
-
-        public int add(String numbers)
+        private (bool, string[]) parsearString(string numbers)
         {
-            if (string.IsNullOrEmpty(numbers))
-            {
-                return 0;
-            }
-
             var (delimiters, ownDelimiter, cadenaNormalizada) = selectDelimiter(numbers);
             string[] numbersArray = cadenaNormalizada.Split(delimiters);
             ThrowExceptionForNegativesNumbers(numbersArray);
-            return calculateResult(ownDelimiter, numbersArray);
-            
+           return (ownDelimiter, numbersArray);
+        }
+
+         
+        public int add(String numbers)
+        {
+           
+           if(isEmpty(numbers)) return 0;
+
+           var (delimiterUsed, array) = parsearString(numbers);
+
+            return calculateResult(delimiterUsed, array).Sum();
+
+        }
+
+        public bool isEmpty(String numbers)
+        {
+            return string.IsNullOrEmpty(numbers);
         }
 
 
