@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using String = System.String;
 
@@ -11,18 +12,26 @@ namespace stringCalculator
         public int add(String numbers)
         {
 
-            if (isEmpty(numbers)) return 0;
-
-            var (delimiterUsed, array) = parsearString(numbers);
-
-            return calculateResult(delimiterUsed, array).Sum();
+            //if (isEmpty(numbers)) return 0;
+            return parseListStringToListInt(IsolateNumbers(numbers)).Sum() ;
 
         }
-        private bool lessThanOneThousand(int number)
+
+        private String[] IsolateNumbers(String numbers)
         {
+            if (!isEmpty(numbers))
+            {
+                var (delimiters, ownDelimiter, cadenaNormalizada) = selectDelimiter(numbers);
+                string[] numbersArray = cadenaNormalizada.Split(delimiters);
+                ThrowExceptionForNegativesNumbers(numbersArray);
 
-            return number <= 1000;
+                return numbersArray;
+            }
+            
+            return new String[] {"0"};
+            
         }
+        
             
 
         private void ThrowExceptionForNegativesNumbers(String[] numbersArray)
@@ -54,22 +63,23 @@ namespace stringCalculator
         }
      
 
-        private IEnumerable<int> calculateResult(bool ownDelimiter, String[] numbersArray)
+        private int[] parseListStringToListInt( String[] numbersArray)
         {
 
-            return numbersArray.Where(n => ownDelimiter || lessThanOneThousand(Int32.Parse(n))).Select(n => Int32.Parse(n));
+            
+            return keepJustLessThanOneThousand(numbersArray.Select(int.Parse).ToArray());
         }
 
-        private (bool, string[]) parsearString(string numbers)
+        private int[] keepJustLessThanOneThousand(int[] numbersArray)
         {
-            var (delimiters, ownDelimiter, cadenaNormalizada) = selectDelimiter(numbers);
-            string[] numbersArray = cadenaNormalizada.Split(delimiters);
-            ThrowExceptionForNegativesNumbers(numbersArray);
-           return (ownDelimiter, numbersArray);
+            
+            return numbersArray.Where(number => number <= 1000).ToArray();
         }
 
-         
-        
+
+
+
+
 
         private bool isEmpty(String numbers)
         {
