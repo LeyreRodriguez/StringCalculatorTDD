@@ -12,7 +12,6 @@ namespace stringCalculator
         public int add(String numbers)
         {
 
-            //if (isEmpty(numbers)) return 0;
             return parseListStringToListInt(IsolateNumbers(numbers)).Sum() ;
 
         }
