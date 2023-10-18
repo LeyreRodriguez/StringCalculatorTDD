@@ -1,90 +1,86 @@
-﻿using System;
-using System.Numerics;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using String = System.String;
+﻿using System.Reflection.Metadata.Ecma335;
 
 namespace stringCalculator
 {
     public class stringCalculator
     {
-        bool ownDelimiter;
+        private bool checkString = false;
 
         public int add(String numbers)
         {
+            List<int> numberArray = GetOnlyValidNumbers(FromStringToIntList(numbers));
+            
+            
 
-            return parseListStringToListInt(IsolateNumbers(numbers)).Sum() ;
+            return numberArray.Sum();
+        }
+        private List<int> GetOnlyValidNumbers(List<int> numberArray)
+        {
+            ThrowExceptionForNegativesNumbers(numberArray);
+
+            numberArray.RemoveAll(number => !IsLessThanOneThousand(number));
+            return numberArray;
 
         }
 
-        private String[] IsolateNumbers(String numbers)
+        private bool IsLessThanOneThousand(int number)
         {
-            if (!isEmpty(numbers))
-            {
-                var (delimiters, ownDelimiter, cadenaNormalizada) = selectDelimiter(numbers);
-                string[] numbersArray = cadenaNormalizada.Split(delimiters);
-                ThrowExceptionForNegativesNumbers(numbersArray);
-
-                return numbersArray;
-            }
-            
-            return new String[] {"0"};
-            
+            return number < 1000;
         }
-        
-            
-
-        private void ThrowExceptionForNegativesNumbers(String[] numbersArray)
+        private bool EmptyString(String numbers)
         {
-            var negativeNumbers = numbersArray.Select(n => Int32.Parse(n)).Where( n => n < 0).ToArray();
+            if (numbers.Length == 0) return true;
+            
+            
+            return false;
+        }
+
+        private List<int> FromStringToIntList(String numbers)
+        {
+            if (EmptyString(numbers)) return new List<int> { 0 }; 
+
+            String normalizeNumbers = NormalizeString(numbers);
+
+            return normalizeNumbers.Split(getDelimiters(numbers)).Select(int.Parse).ToList();
+        }
+
+        private void ThrowExceptionForNegativesNumbers(List<int> numbersList)
+        {
+            var negativeNumbers = numbersList.Select(n => n).Where(n => n < 0).ToArray();
             if (negativeNumbers.Any())
             {
                 throw new Exception($"Negatives not allowed: {string.Join(" ", negativeNumbers)}");
             }
         }
 
-        private (char[], bool,String) selectDelimiter(String numbers)
+        private char[] getDelimiters(String numbers)
         {
-            char[] delimiters = { ',', '\n' };
-            bool ownDelimiter = false;
+            char[] delimiterChars;
 
-            if(numbers.StartsWith("//")) 
+            if (checkString) {
+                delimiterChars = new char[] { ',', '\n', numbers[2] };
+            }
+            else
             {
-               
-                ownDelimiter = true;
-                
-                delimiters = new[] { numbers[2] , ',' , '\n' };
-                numbers = numbers.Substring(4);
-               
+                delimiterChars = new char[] { ',', '\n' };
             }
             
-            return (delimiters, ownDelimiter,numbers);
 
+            return delimiterChars;
         }
-     
 
-        private int[] parseListStringToListInt( String[] numbersArray)
+       
+
+
+        private String NormalizeString(String numbers)
         {
-
-            
-            return keepJustLessThanOneThousand(numbersArray.Select(int.Parse).ToArray());
+            if (numbers.StartsWith("//"))
+            {
+                checkString = true;
+                return numbers.Substring(4);
+            }
+            return numbers;
         }
-
-        private int[] keepJustLessThanOneThousand(int[] numbersArray)
-        {
-            
-            return numbersArray.Where(number => number <= 1000).ToArray();
-        }
-
-
-
-
-
-
-        private bool isEmpty(String numbers)
-        {
-            return string.IsNullOrEmpty(numbers);
-        }
-
 
     }
 }
