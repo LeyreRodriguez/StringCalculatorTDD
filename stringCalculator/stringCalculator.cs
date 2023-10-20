@@ -18,14 +18,14 @@ namespace stringCalculator
         {
             ThrowExceptionForNegativesNumbers(numberArray);
 
-            numberArray.RemoveAll(number => !IsLessThanOneThousand(number));
+            numberArray.RemoveAll(number => IsGreaterThanOneThousand(number));
             return numberArray;
 
         }
 
-        private bool IsLessThanOneThousand(int number)
+        private bool IsGreaterThanOneThousand(int number)
         {
-            return number < 1000;
+            return number >= 1000;
         }
         private bool EmptyString(String numbers)
         {
